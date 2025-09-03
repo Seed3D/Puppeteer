@@ -1,0 +1,15 @@
+[submodule "animation/third_partys/Video_Depth_Anything"]
+	path = animation/third_partys/Video_Depth_Anything
+	url = https://github.com/ChaoyueSong/Video_Depth_Anything
+[submodule "animation/third_partys/co_tracker"]
+	path = animation/third_partys/co_tracker
+	url = https://github.com/ChaoyueSong/co_tracker
+[submodule "skinning/third_partys/PartField"]
+	path = skinning/third_partys/PartField
+	url = https://github.com/ChaoyueSong/PartField
+[submodule "animation/third_partys/ptlflow"]
+	path = animation/third_partys/ptlflow
+	url = https://github.com/ChaoyueSong/ptlflow
+[submodule "skeleton/third_party/Michelangelo"]
+	path = skeleton/third_party/Michelangelo
+	url = https://github.com/ChaoyueSong/Michelangelo
