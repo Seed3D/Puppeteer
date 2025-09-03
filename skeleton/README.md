@@ -82,12 +82,12 @@ bash demo.sh
 Input mesh quality directly affects model performance, since the pre-trained shape encoder was trained on high-quality meshes. You can test reconstruction using the shape latents extracted from the shape encoder to check your data. The example below shows results from an input mesh with coarse surface.
 
 <p align="center">
-  <img width="80%" src="./assets/reconstruction.png"/>
+  <img width="80%" src="../assets/reconstruction.png"/>
 </p>
 
 ## Visualization
 We use MeshLab for skeleton visualization in paper. The skeleton can be saved using `save_skeleton_obj` in `utils/save_utils.py`. Bones are represented as blue cones oriented from the parent joint to the child joint, joints as red spheres, and the root joint as a green sphere. Example results are shown below.
 
 <p align="center">
-  <img width="80%" src="./assets/skeleton_results.png"/>
+  <img width="80%" src="../assets/skeleton_results.png"/>
 </p>

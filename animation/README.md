@@ -68,7 +68,7 @@ To optimize the animation, you can run
 bash demo.sh
 ```
 
-The results are saved to `results/{seq_name}/{save_name}`
+The results are saved to `results/{seq_name}/{save_name}`. Modify `--main_renderer` and `--additional_renderers` to change rendering viewpoints. If animations exhibit jitter or instability, increase the root/joint smoothing weights for better temporal consistency.
 
 
 ## TODO
