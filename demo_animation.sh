@@ -52,7 +52,10 @@ echo "Running optimization for each sequence..."
 mkdir -p ../results/animation
 
 python optimization.py --save_path ../results/animation --iter 200 --input_path ../examples --img_size 960 \
-        --seq_name 'cat' --save_name 'cat_demo'
+        --seq_name 'spiderman' --save_name 'spiderman_demo'
+
+python optimization.py --save_path ../results/animation --iter 200 --input_path ../examples --img_size 960 \
+        --seq_name 'deer' --save_name 'deer_demo' --smooth_weight 1 --main_renderer front_left --additional_renderer "right,front_right,back_right"
 
 echo "Animation completed."
 

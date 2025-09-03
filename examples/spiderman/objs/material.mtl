@@ -1,0 +1,10 @@
+newmtl Material
+Kd 0.800 0.800 0.800
+Ke 0.000 0.000 0.000
+Ni 1.500
+d 1.0
+illum 2
+map_Kd texture_pbr_v128.png
+map_Pm texture_pbr_v128_metallic.png
+map_Pr texture_pbr_v128_roughness.png
+map_Bump -bm 1.0 texture_pbr_v128_normal.png
