@@ -64,7 +64,7 @@ pip install --no-index --no-cache-dir pytorch3d -f https://dl.fbaipublicfiles.co
 
 ## 🚀 Demo
 
-We provide a complete pipeline for rigging and animating 3D models. Before running the pipeline, visit each folder (skeleton, skinning, animation) to download the necessary model checkpoints.
+We provide a complete pipeline for rigging and animating 3D models. Before running the pipeline, visit each folder (skeleton, skinning, animation) to download the necessary model checkpoints. Example data is available in the [examples](https://github.com/ByteDance-Seed/Puppeteer/tree/main/examples) folder.
 
 ### Rigging
 
