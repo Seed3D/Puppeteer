@@ -10,7 +10,7 @@ python download.py
 
 ## Evaluation
 
-To reproduce our evaluations, run the following command on `Articulation-XL2.0-test`, `ModelsResource-test` and `Diverse-pose-test`. `Articulation-XL2.0-test` and `Diverse-pose-test` are available [here](https://huggingface.co/datasets/chaoyue7/Articulation-XL2.0). For your convenience, we also save `ModelsResource-test` in our format (download it [here](https://drive.google.com/file/d/12U2ZuZWcKCQRI3IheBbG6I9-jfpG4KF5/view?usp=sharing)). The inference process requires 4.6 GB of VRAM and takes 1–2 seconds per inference.
+To reproduce our evaluations, run the following command on `Articulation-XL2.0-test`, `ModelsResource-test` and `Diverse-pose-test`. `Articulation-XL2.0-test` and `Diverse-pose-test` are available [here](https://huggingface.co/datasets/chaoyue7/Articulation-XL2.0). For your convenience, we also save `ModelsResource-test` in our format (download it [here](https://drive.google.com/file/d/12U2ZuZWcKCQRI3IheBbG6I9-jfpG4KF5/view?usp=sharing)). See the instructions [here](https://github.com/Seed3D/Puppeteer/tree/main/skeleton/data_utils) for data processing and saving. The inference process requires 4.6 GB of VRAM and takes 1–2 seconds per inference.
 
 ```
 bash eval.sh
