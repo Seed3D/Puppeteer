@@ -10,6 +10,6 @@
 [submodule "animation/third_partys/ptlflow"]
 	path = animation/third_partys/ptlflow
 	url = https://github.com/ChaoyueSong/ptlflow
-[submodule "skeleton/third_party/Michelangelo"]
-	path = skeleton/third_party/Michelangelo
-	url = https://github.com/ChaoyueSong/Michelangelo
+[submodule "skeleton/third_partys/Michelangelo"]
+	path = skeleton/third_partys/Michelangelo
+	url = https://github.com/ChaoyueSong/Michelangelo/

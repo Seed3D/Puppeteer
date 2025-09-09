@@ -5,7 +5,7 @@ This folder provides the skinning weight prediction implementation and scripts t
 First download [checkpoints of PartField](https://huggingface.co/mikaelaangel/partfield-ckpt) and our [released weights](https://huggingface.co/Seed3D/Puppeteer) for skinning weight prediction:
 
 ```
-ln -s ../../skeleton/third_party/Michelangelo third_partys/Michelangelo
+ln -s ../../skeleton/third_partys/Michelangelo third_partys/Michelangelo
 python download.py
 ```
 

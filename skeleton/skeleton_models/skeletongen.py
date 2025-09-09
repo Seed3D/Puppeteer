@@ -14,7 +14,7 @@
 import torch
 from torch import nn
 from transformers import AutoModelForCausalLM
-from third_party.Michelangelo.encode import load_model
+from third_partys.Michelangelo.encode import load_model
 from skeleton_models.skeleton_opt import SkeletonOPTConfig
 
 def undiscretize(t, low, high, num_discrete):
