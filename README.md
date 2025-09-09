@@ -44,7 +44,7 @@ Puppeteer is proposed for **automatic rigging and animation of 3D objects**. Giv
 <br/>
 
 ## 🔥 News
-- Sep 04, 2025: We have released the diverse pose subset of Articulation-XL2.0, and now the [complete Articulation-XL2.0 dataset](https://huggingface.co/datasets/Seed3D/Articulation-XL2.0) is available, featuring 59.4K high-quality rigged data samples. We also release the inference codes and [model checkpoints](https://huggingface.co/Seed3D/Puppeteer).
+- Sep 04, 2025: We have released the diverse pose subset of Articulation-XL2.0, and now the [complete Articulation-XL2.0 dataset](https://huggingface.co/datasets/Seed3D/Articulation-XL2.0) is available (**more than 2k downloads**), featuring 59.4K high-quality rigged data samples. We also release the inference codes and [model checkpoints](https://huggingface.co/Seed3D/Puppeteer).
 - Aug 15, 2025: Release [paper](https://arxiv.org/abs/2508.10898) of Puppeteer!
 
 
@@ -64,7 +64,7 @@ pip install --no-index --no-cache-dir pytorch3d -f https://dl.fbaipublicfiles.co
 
 ## 🚀 Demo
 
-We provide a complete pipeline for rigging and animating 3D models. Before running the pipeline, visit each folder (skeleton, skinning, animation) to download the necessary model checkpoints. Example data is available in the [examples](https://github.com/Seed3D/Puppeteer/tree/main/examples) folder.
+We provide a complete pipeline for rigging and animating 3D models. **Before running the pipeline, visit each folder (skeleton, skinning, animation) to download the necessary model checkpoints.** Example data is available in the [examples](https://github.com/Seed3D/Puppeteer/tree/main/examples) folder.
 
 ### Rigging
 
