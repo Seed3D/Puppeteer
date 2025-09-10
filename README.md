@@ -44,6 +44,7 @@ Puppeteer is proposed for **automatic rigging and animation of 3D objects**. Giv
 <br/>
 
 ## 🔥 News
+- Sep 10, 2025: Thanks to the efforts of @[czpcf](https://github.com/czpcf), you can now export rigged meshes to FBX files.
 - Sep 09, 2025: We uploaded the [video](https://www.youtube.com/watch?v=DnKx803JHyI) for Puppeteer.
 - Sep 04, 2025: We have released the diverse pose subset of Articulation-XL2.0, and now the [complete Articulation-XL2.0 dataset](https://huggingface.co/datasets/Seed3D/Articulation-XL2.0) is available (**more than 2k downloads**), featuring 59.4K high-quality rigged data samples. We also release the inference codes and [model checkpoints](https://huggingface.co/Seed3D/Puppeteer).
 - Aug 15, 2025: Release [paper](https://arxiv.org/abs/2508.10898) of Puppeteer!
@@ -75,7 +76,13 @@ Given 3D meshes, we first predict the skeleton and skinning weights:
 bash demo_rigging.sh
 ```
 
-The final rig files will be saved in `results/final_rigging`. To evaluate the [skeleton](https://github.com/Seed3D/Puppeteer/tree/main/skeleton) and [skinning](https://github.com/Seed3D/Puppeteer/tree/main/skinning) components separately, refer to their respective folders. 
+The final rig files will be saved in `results/final_rigging`. To evaluate the [skeleton](https://github.com/Seed3D/Puppeteer/tree/main/skeleton) and [skinning](https://github.com/Seed3D/Puppeteer/tree/main/skinning) components separately, refer to their respective folders. After that, you can export the rigged mesh to FBX file:
+
+```
+python export.py --mesh examples/deer.obj --rig results/final_rigging/deer.txt --output deer.fbx
+```
+
+Before running this script, make sure to install `bpy==4.2.0`.
 
 ### Video-guided 3D animation
 

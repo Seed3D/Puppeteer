@@ -125,15 +125,15 @@ def export_fbx(
 
 def parse():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--mesh", type=str, required=True, help="obj path of processed mesh")
-    parser.add_argument("--res", type=str, required=True, help="path of prediction result")
+    parser.add_argument("--mesh", type=str, required=True, help="obj path of original mesh")
+    parser.add_argument("--rig", type=str, required=True, help="path of prediction rigging")
     parser.add_argument("--output", type=str, required=False, default="res.fbx")
     return parser.parse_args()
 
 if __name__ == "__main__":
     args = parse()
     mesh_path = args.mesh
-    res_path = args.res
+    rig_path = args.rig
     output_path = args.output
 
     # change to face -y axis
@@ -151,7 +151,7 @@ if __name__ == "__main__":
     N = vertices.shape[0]
 
     # handle RigNet output
-    f_info = open(res_path, 'r')
+    f_info = open(rig_path, 'r')
     joint_pos = {}
     joint_hier = {}
     joint_skin = []
