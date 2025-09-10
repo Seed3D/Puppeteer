@@ -227,7 +227,6 @@ if __name__ == "__main__":
         u = Q.pop()
         dfs_order.append(u)
         Q.extend(son[u])
-    print(dfs_order)
     export_fbx(
         path=output_path,
         vertices=vertices,
