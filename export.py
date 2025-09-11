@@ -144,7 +144,7 @@ if __name__ == "__main__":
     ])
 
     # load original model
-    mesh = trimesh.load(mesh_path, force='mesh', process=False)
+    mesh = trimesh.load(mesh_path, force='mesh', process=False, maintain_order=True)
     vertices = (rot @ mesh.vertices.T).T
     faces = mesh.faces
 
