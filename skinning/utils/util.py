@@ -40,7 +40,22 @@ def read_obj_file(file_path):
                 face = [int(part.split('/')[0]) - 1 for part in parts]
                 faces.append(face)
     
-    return np.array(vertices), np.array(faces)
+    return np.array(vertices), faces
+
+def triangulate_faces(faces):
+    """Convert quads and n-gons to triangles"""
+    triangulated_faces = []
+    for face in faces:
+        if len(face) == 3:
+            triangulated_faces.append(face)
+        elif len(face) == 4:
+            # for quad mesh
+            triangulated_faces.append([face[0], face[1], face[2]])
+            triangulated_faces.append([face[0], face[2], face[3]])
+        elif len(face) > 4:
+            for i in range(1, len(face) - 1):
+                triangulated_faces.append([face[0], face[i], face[i + 1]])
+    return np.array(triangulated_faces)
 
 def read_rig_file(file_path):
     """Read rig file and return joints, bones, and root index"""
@@ -109,27 +124,17 @@ def compute_graph_distance(num_joints, adjacency):
     return graph_dist
     
 def get_tpl_edges(vertices, faces):
-    """Get topology edges from mesh"""
-    edge_index = []
-    for v in range(len(vertices)):
-        face_ids = np.argwhere(faces == v)[:, 0]
-        neighbor_ids = []
-        for face_id in face_ids:
-            for v_id in range(3):
-                if faces[face_id, v_id] != v:
-                    neighbor_ids.append(faces[face_id, v_id])
-        neighbor_ids = list(set(neighbor_ids))
-        neighbor_ids = [np.array([v, n])[np.newaxis, :] for n in neighbor_ids]
-        if len(neighbor_ids) == 0:
-            continue
-        neighbor_ids = np.concatenate(neighbor_ids, axis=0)
-        edge_index.append(neighbor_ids)
+    """Get topology edges from mesh (handles any polygon type)"""
+    edges = set()
     
-    if edge_index:
-        edge_index = np.concatenate(edge_index, axis=0)
-    else:
-        edge_index = np.array([]).reshape(0, 2)
-    return edge_index
+    for face in faces:
+        for i in range(len(face)):
+            v1 = face[i]
+            v2 = face[(i + 1) % len(face)]
+            edge = tuple(sorted([v1, v2]))
+            edges.add(edge)
+    
+    return np.array(list(edges))
 
 def save_args(args, output_dir, filename="config.json"):
     args_dict = vars(args)

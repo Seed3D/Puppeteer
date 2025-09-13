@@ -20,7 +20,7 @@ import torch.utils.data as data
 import trimesh
 from collections import deque
 from utils.util import process_mesh_to_pc, read_obj_file, read_rig_file, normalize_to_unit_cube, build_adjacency_list, \
-                        compute_graph_distance, get_tpl_edges
+                        compute_graph_distance, get_tpl_edges, triangulate_faces
 
 class SkinData(data.Dataset):
     def __init__(self, args, mode, query_num=4096):
@@ -79,7 +79,6 @@ class SkinData(data.Dataset):
         
         file_name = data['file_name'][()].decode('utf-8')
         vertices = data['vertices'][:]
-        faces = data['faces'][:]
         edges = data['edges'][:]
         gt_skin = data['skin'][:]
         
@@ -92,7 +91,6 @@ class SkinData(data.Dataset):
             'graph_dist': graph_dist,
             'file_name': file_name,
             'vertices': vertices,
-            'faces': faces,
             'edges': edges,
             'gt_skin': gt_skin
         }
@@ -104,9 +102,11 @@ class SkinData(data.Dataset):
         # Load mesh
         mesh_file_path = os.path.join(self.mesh_folder, obj_file)
         vertices, faces = read_obj_file(mesh_file_path)
+
+        triangulated_faces = triangulate_faces(faces) # if faces are not triangles, triangulate them
         
         # Create trimesh object and process to point cloud
-        mesh = trimesh.Trimesh(vertices=vertices, faces=faces)
+        mesh = trimesh.Trimesh(vertices=vertices, faces=triangulated_faces)
         pc_w_norm, _ = process_mesh_to_pc(mesh, sample_num=8192)
         sample_points = pc_w_norm[:, :3]
         normal = pc_w_norm[:, 3:]
@@ -136,7 +136,6 @@ class SkinData(data.Dataset):
             'graph_dist': graph_dist,
             'file_name': file_name,
             'vertices': vertices,
-            'faces': faces,
             'edges': edges
         }
 
@@ -150,7 +149,6 @@ class SkinData(data.Dataset):
         graph_dist = data_dict['graph_dist']
         file_name = data_dict['file_name']
         vertices = data_dict['vertices']
-        faces = data_dict['faces']
         edges = data_dict['edges']
         if 'gt_skin' in data_dict:
             gt_skin = data_dict['gt_skin']
