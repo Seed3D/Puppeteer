@@ -19,6 +19,7 @@ import trimesh
 
 from collections import deque, defaultdict
 from scipy.cluster.hierarchy import linkage, fcluster
+from scipy.spatial.distance import cdist
 
 from data_utils.pyrender_wrapper import PyRenderWrapper
 from data_utils.data_loader import DataLoader
@@ -96,10 +97,7 @@ def ensure_skeleton_connectivity(joints, bones, root_index=None, merge_distance_
         if len(components) == 1:
             # print("Successfully ensured skeleton connectivity")
             break
-            
-        # if iteration == 0:
-        #     print(f"Found {len(components)} disconnected components, connecting them progressively...")
-        
+
         # Find the globally closest pair of components
         min_distance = float('inf')
         best_pair = None
