@@ -48,7 +48,147 @@ def pred_joints_and_bones(bone_coor):
     
     return pred_joints, valid_bones
 
+def find_connected_components(joints, bones):
+    """Find connected components in the skeleton graph."""
+    n_joints = len(joints)
+    graph = defaultdict(list)
+    
+    # Build adjacency list
+    for parent, child in bones:
+        graph[parent].append(child)
+        graph[child].append(parent)
+    
+    visited = [False] * n_joints
+    components = []
+    
+    for i in range(n_joints):
+        if not visited[i]:
+            component = []
+            queue = deque([i])
+            visited[i] = True
+            
+            while queue:
+                node = queue.popleft()
+                component.append(node)
+                
+                for neighbor in graph[node]:
+                    if not visited[neighbor]:
+                        visited[neighbor] = True
+                        queue.append(neighbor)
+            
+            components.append(component)
+    
+    return components
 
+def ensure_skeleton_connectivity(joints, bones, root_index=None, merge_distance_threshold=0.01):
+    """
+    Ensure skeleton is fully connected.
+    - If distance < merge_distance_threshold: merge joints
+    - If distance >= merge_distance_threshold: connect with bone
+    """
+    current_joints = joints.copy()
+    current_bones = list(bones)
+    current_root = root_index
+    
+    iteration = 0
+    while True:
+        components = find_connected_components(current_joints, current_bones)
+        if len(components) == 1:
+            # print("Successfully ensured skeleton connectivity")
+            break
+            
+        # if iteration == 0:
+        #     print(f"Found {len(components)} disconnected components, connecting them progressively...")
+        
+        # Find the globally closest pair of components
+        min_distance = float('inf')
+        best_pair = None
+        
+        for i in range(len(components)):
+            for j in range(i + 1, len(components)):
+                comp1_joints = current_joints[components[i]]
+                comp2_joints = current_joints[components[j]]
+                
+                distances = cdist(comp1_joints, comp2_joints)
+                min_idx = np.unravel_index(np.argmin(distances), distances.shape)
+                distance = distances[min_idx]
+                
+                if distance < min_distance:
+                    min_distance = distance
+                    best_pair = (i, j, components[i][min_idx[0]], components[j][min_idx[1]], min_idx)
+        
+        if best_pair is None:
+            print("Warning: Could not find valid component pair to connect")
+            break
+        
+        comp1_idx, comp2_idx, joint1_idx, joint2_idx, min_idx = best_pair
+        
+        if min_distance < merge_distance_threshold:
+            # Merge the joints
+            # print(f"Iteration {iteration + 1}: Merging closest joints {joint1_idx} and {joint2_idx} "
+            #       f"(distance: {min_distance:.4f})")
+            
+            # Always merge joint2 into joint1
+            merge_map = {joint2_idx: joint1_idx}
+            
+            # Update bones
+            updated_bones = []
+            for parent, child in current_bones:
+                new_parent = merge_map.get(parent, parent)
+                new_child = merge_map.get(child, child)
+                if new_parent != new_child:  # Remove self-loops
+                    updated_bones.append([new_parent, new_child])
+            
+            # Update root
+            if current_root == joint2_idx:
+                current_root = joint1_idx
+            
+            # Remove the merged joint and update indices
+            joint_to_remove = joint2_idx
+            mask = np.ones(len(current_joints), dtype=bool)
+            mask[joint_to_remove] = False
+            current_joints = current_joints[mask]
+            
+            # Create index mapping for remaining joints
+            old_to_new = {}
+            new_idx = 0
+            for old_idx in range(len(mask)):
+                if mask[old_idx]:
+                    old_to_new[old_idx] = new_idx
+                    new_idx += 1
+            
+            # Update bone indices
+            current_bones = [[old_to_new[parent], old_to_new[child]] 
+                           for parent, child in updated_bones 
+                           if parent in old_to_new and child in old_to_new]
+            
+            # Update root index
+            if current_root is not None and current_root in old_to_new:
+                current_root = old_to_new[current_root]
+            
+        else:
+            # Connect with bone
+            # print(f"Iteration {iteration + 1}: Connecting closest components with bone {joint1_idx} -> {joint2_idx} "
+            #       f"(distance: {min_distance:.4f})")
+            current_bones.append([joint1_idx, joint2_idx])
+        
+        iteration += 1
+        
+        # prevent infinite loops
+        if iteration > len(joints):
+            print(f"Warning: Maximum iterations reached ({iteration}), stopping")
+            break
+    
+    current_bones = np.array(current_bones) if len(current_bones) > 0 else np.array([]).reshape(0, 2)
+    
+    # Final connectivity verification
+    final_components = find_connected_components(current_joints, current_bones)
+    if len(final_components) == 1:
+        pass
+    else:
+        print(f"Warning: Still have {len(final_components)} disconnected components after {iteration} iterations")
+    
+    return current_joints, current_bones, current_root
 
 def merge_duplicate_joints_and_fix_bones(joints, bones, tolerance=0.0025, root_index=None):
     """
@@ -149,6 +289,12 @@ def merge_duplicate_joints_and_fix_bones(joints, bones, tolerance=0.0025, root_i
     #     print(f"merge results:")
     #     print(f"  joint number: {n_joints} -> {len(final_joints)} (remove {removed_joints})")
     #     print(f"  bone number: {len(bones)} -> {len(final_bones)} (remove {removed_bones})")
+
+    # Ensure skeleton connectivity with relaxed threshold
+    final_joints, final_bones, final_root_index = ensure_skeleton_connectivity(
+        final_joints, final_bones, final_root_index, 
+        merge_distance_threshold=tolerance*8  # More relaxed threshold for connectivity
+    )
     
     if root_index is not None:
         return final_joints, final_bones, final_root_index

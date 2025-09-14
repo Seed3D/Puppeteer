@@ -32,7 +32,8 @@ inputs/
     ├── flow/                 # Optical flow data
     ├── flow_vis/             # Visualized optical flow
     ├── depth/                # Esitmated depth data
-    ├── track/                # tracked joints/vertices
+    ├── track_2d_verts/       # tracked vertices
+    ├── track_2d_joints/      # tracked joints
     └── input.mp4             # Source video
 ```
 
