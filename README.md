@@ -76,7 +76,7 @@ Given 3D meshes, we first predict the skeleton and skinning weights:
 bash demo_rigging.sh
 ```
 
-The final rig files will be saved in `results/final_rigging`. To evaluate the [skeleton](https://github.com/Seed3D/Puppeteer/tree/main/skeleton) and [skinning](https://github.com/Seed3D/Puppeteer/tree/main/skinning) components separately, refer to their respective folders. After that, you can export the rigged mesh to FBX file:
+The final rig files will be saved in `results/final_rigging`. **To evaluate the [skeleton](https://github.com/Seed3D/Puppeteer/tree/main/skeleton) and [skinning](https://github.com/Seed3D/Puppeteer/tree/main/skinning) components separately, refer to the README in each folder.** After that, you can export the rigged mesh to FBX file:
 
 ```
 python export.py --mesh examples/deer.obj --rig results/final_rigging/deer.txt --output deer.fbx
@@ -92,7 +92,7 @@ To animate the rigged model using video guidance, run:
 bash demo_animation.sh
 ```
 
-The rendered 3D animation sequence from different views will be saved in `results/animation`. Refer to the [animation folder](https://github.com/Seed3D/Puppeteer/tree/main/animation) for comprehensive details on data processing and structure.
+The rendered 3D animation sequence from different views will be saved in `results/animation`. Refer to the README in the [animation folder](https://github.com/Seed3D/Puppeteer/tree/main/animation) for comprehensive details on data processing and structure.
 
 
 ## 😊 Acknowledgment
