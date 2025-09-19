@@ -21,7 +21,7 @@
   <sup>3 </sup>A*STAR
 </p>
 
-<h3>arXiv 2025</h3>
+<h3>NeurIPS 2025 (Spotlight)</h3>
 
 <div align="center">
   <img width="80%" src="assets/puppeteer_teaser.gif">
@@ -44,6 +44,7 @@ Puppeteer is proposed for **automatic rigging and animation of 3D objects**. Giv
 <br/>
 
 ## 🔥 News
+- Sep 19, 2025: Puppeteer is accepted as a **spotlight** paper at NeurIPS 2025, see you in San Diego!
 - Sep 10, 2025: Thanks to the efforts of @[czpcf](https://github.com/czpcf), you can now export rigged meshes to FBX files.
 - Sep 09, 2025: We uploaded the [video](https://www.youtube.com/watch?v=DnKx803JHyI) for Puppeteer.
 - Sep 04, 2025: We have released the diverse pose subset of Articulation-XL2.0, and now the [complete Articulation-XL2.0 dataset](https://huggingface.co/datasets/Seed3D/Articulation-XL2.0) is available (**more than 2k downloads**), featuring 59.4K high-quality rigged data samples. We also release the inference codes and [model checkpoints](https://huggingface.co/Seed3D/Puppeteer).
@@ -106,7 +107,7 @@ The code builds upon [MagicArticulate](https://github.com/Seed3D/MagicArticulate
 @article{song2025puppeteer,
   title={Puppeteer: Rig and Animate Your 3D Models},
   author={Chaoyue Song and Xiu Li and Fan Yang and Zhongcong Xu and Jiacheng Wei and Fayao Liu and Jiashi Feng and Guosheng Lin and Jianfeng Zhang},
-  journal={arXiv preprint arXiv:2508.10898},
+  journal={Advances in Neural Information Processing Systems},
   year={2025}
 }
 ```
