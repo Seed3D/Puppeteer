@@ -296,13 +296,21 @@ class AnimationOptimizer:
             quats_to_optimize, global_quats, global_trans, n_iters
         )
         
-        # Initialize depth module and flow weights
-        depth_module = DepthModule(
-            encoder='vitl',
-            device=self.device,
-            input_size=images_batch.shape[1],
-            fp32=False
-        )
+        # Initialize depth module lazily: if depth cache already exists
+        # (e.g. written by precompute_depth.py), skip loading the ~1.5GB
+        # Video-Depth-Anything model so <=12GB GPUs don't OOM.
+        depth_cache = os.path.join(flow_dirs.replace('flow', 'depth'),
+                                   'depth_gt_raw.pt')
+        if os.path.exists(depth_cache):
+            print("Depth cache found — skipping VideoDepthAnything load")
+            depth_module = None
+        else:
+            depth_module = DepthModule(
+                encoder='vitl',
+                device=self.device,
+                input_size=images_batch.shape[1],
+                fp32=False
+            )
         
         # Prepare masks
         real_rgb = images_batch[..., :3]
@@ -467,6 +475,8 @@ def load_and_prepare_data(args):
     images = []
     for f in img_files:
         img = Image.open(f).convert("RGBA")
+        if img.size != (args.img_size, args.img_size):
+            img = img.resize((args.img_size, args.img_size), Image.LANCZOS)
         arr = np.array(img, dtype=np.float32) / 255.0
         t = torch.from_numpy(arr).to(args.device)
         images.append(t)

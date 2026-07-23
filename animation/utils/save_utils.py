@@ -238,8 +238,10 @@ def save_track_points(point_vis_mask, renderer, model, img_path, out_dir, args):
     os.makedirs(track_2d_point_path, exist_ok=True)
     
     num_visible = len(visible_indices)
-    MAX_VISIBLE_POINTS = 15000
-    MAX_SAMPLE_POINTS = 4000
+    # Lowered from 15000/4000 for <=12GB GPUs: dense meshes (200k+ verts)
+    # OOM CoTracker's corr-volume einsum in "full" mode.
+    MAX_VISIBLE_POINTS = 6000
+    MAX_SAMPLE_POINTS = 2000
     
     # Determine tracking strategy
     tracking_mode = "full" if num_visible <= MAX_VISIBLE_POINTS else "sampled"
